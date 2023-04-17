@@ -10,7 +10,8 @@ public class JDBC {
     static BufferedReader keyboard;
 
     public static void main(String args[]) throws IOException {
-        String username = "Ora_(usernme)", password = "CS470_";
+        //this logs into my(alex) account
+        String username = "ORA_ach135", password = "CS470_9404";
         String ename;
         int original_empno =0;
         int empno;
