@@ -16,6 +16,12 @@ public class JDBC {
         int original_empno =0;
         int empno;
 
+        //create arraylist for invalid strings
+        ArrayList<String> valid_inputs1 = new ArrayList<String>();
+        valid_inputs1.add("view");
+        valid_inputs1.add("update");
+        valid_inputs1.add("insert");
+
         keyboard = new BufferedReader(new InputStreamReader(System.in));
 
         try{
@@ -34,27 +40,31 @@ public class JDBC {
 
 
             //code here for program flow
-            //condition for loop end
-            boolean program_end = false;
+            //condition for loop end, might not be needed, just use a break
+            //boolean program_end = false;
             //while program_end is = false, loop will continue
-            while(program_end == false) {
-                //create arraylist for invalid strings
+            while(true) {
+                /*//create arraylist for invalid strings
                 ArrayList<String> valid_inputs1 = new ArrayList<String>();
                 valid_inputs1.add("view");
                 valid_inputs1.add("update");
                 valid_inputs1.add("insert");
-                Boolean input_check = false;
+                //Boolean input_check = false;*/
 
                 //-ask user for a new entry or an update to an existing entry
                 String input = null;
-                while (input_check == false) {
+                while (true) {
                     System.out.println("Welcome. What would you like to do? [view] tables, [update] tables, or [insert] new entries?");
 
                     input = keyboard.readLine();
 
-                    //check for errors
-                    input_check = check_string_errors(input, valid_inputs1);
+                    //check for errors, works with lower case
+                    boolean input_check = check_string_errors(input.toLowerCase(Locale.ROOT), valid_inputs1);
                     //System.out.println(input_check);
+                    if (input_check == true)
+                        break;
+                    else
+                        System.out.println("Wrong input, please try again");
                 }
 
                 //switch branch for different options
@@ -111,12 +121,12 @@ public class JDBC {
         for(int i = 0; i < check.size(); i++){
             //System.out.println(check.get(i));
             if(original.equals(check.get(i))){
-                System.out.println("check passes");
+                //System.out.println("check passes");
                 return true;
                 //break;
             }
         }
-        System.out.println("check fail");
+        //System.out.println("check fail");
         return false;
 
     }
