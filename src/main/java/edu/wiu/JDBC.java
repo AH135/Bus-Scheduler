@@ -22,6 +22,7 @@ public class JDBC {
         valid_inputs1.add("update");
         valid_inputs1.add("insert");
 
+        //keyboard object for user input
         keyboard = new BufferedReader(new InputStreamReader(System.in));
 
         try{
@@ -37,19 +38,7 @@ public class JDBC {
             stmt = conn.createStatement();
 
 
-
-
-            //code here for program flow
-            //condition for loop end, might not be needed, just use a break
-            //boolean program_end = false;
-            //while program_end is = false, loop will continue
             while(true) {
-                /*//create arraylist for invalid strings
-                ArrayList<String> valid_inputs1 = new ArrayList<String>();
-                valid_inputs1.add("view");
-                valid_inputs1.add("update");
-                valid_inputs1.add("insert");
-                //Boolean input_check = false;*/
 
                 //-ask user for a new entry or an update to an existing entry
                 String input = null;
@@ -80,16 +69,12 @@ public class JDBC {
                         break;
                 }
 
-                //current breakpoint, for debugging currently
+                //current breakpoint, for debugging
                 break;
 
 
             }
 
-            /*demo for user prompts
-            //Scanner scan = new Scanner(System.in);
-            String input = keyboard.readLine();
-            System.out.println(input);*/
 
             //this is the table object created from a select statement
             //ResultSet rset = stmt.executeQuery("Select Example" + "stuff");
@@ -114,16 +99,12 @@ public class JDBC {
     //method that takes in a string and an arraylist, returns a fail if the "original"
     //string is not within the arraylist
     public static boolean check_string_errors(String original, ArrayList<String> check){
-        //boolean check_fail = false;
-        //System.out.println(original);
-        //System.out.println(check.toString());
 
         for(int i = 0; i < check.size(); i++){
             //System.out.println(check.get(i));
             if(original.equals(check.get(i))){
                 //System.out.println("check passes");
                 return true;
-                //break;
             }
         }
         //System.out.println("check fail");
