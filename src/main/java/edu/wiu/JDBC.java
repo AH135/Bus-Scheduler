@@ -58,11 +58,21 @@ public class JDBC {
 
                 //switch branch for different options
                 switch (input) {
-                    //this needs to show view options and then print them
+                    //this needs to show view options and then print them, don't need this for lab4 I think
                     case ("view"):
+
                         break;
                     //this needs to allow user to update an existing table
                     case("update"):
+                        get_table_names();
+                        System.out.println("Enter a table to update:");
+                        String table_name = keyboard.readLine();
+                        System.out.println("conditions: [1], [2], [3]");
+
+
+                        /*while (rset.next()) {
+                            System.out.println(rset.getString(1));
+                        }*/
                         break;
                     //this needs to allow the user to insert into an existing table
                     case("insert"):
@@ -77,7 +87,8 @@ public class JDBC {
 
 
             //this is the table object created from a select statement
-            //ResultSet rset = stmt.executeQuery("Select Example" + "stuff");
+            /*
+            ///ResultSet rset = stmt.executeQuery("Select Example" + "stuff");
             ResultSet rset = stmt.executeQuery("Select * from Doctors");
 
             //example of printed table, columns concatenated together while it loops.
@@ -85,7 +96,7 @@ public class JDBC {
                 System.out.println(rset.getString(1) +" "+  rset.getString(2));
             }
 
-            rset.close();
+            rset.close();*/
 
 
         } catch(SQLException e){
@@ -109,6 +120,25 @@ public class JDBC {
         }
         //System.out.println("check fail");
         return false;
+
+    }
+
+    //method just prints out the current user's tables that they have created.
+    //for the future, an arraylist is uitilized for manipulation if needed.
+    public static void get_table_names(){
+        ArrayList<String> table_names = new ArrayList<>();
+
+        try {
+            ResultSet rset = stmt.executeQuery("Select table_name from user_tables");
+            while (rset.next()) {
+                System.out.println(rset.getString(1));
+                table_names.add(rset.getString(1));
+            }
+        }catch (SQLException e){
+
+            System.out.println ("SQL Exception: " + e.getMessage());
+
+        }
 
     }
 
