@@ -15,6 +15,12 @@ public class JDBC {
         String ename;
         int original_empno =0;
         int empno;
+        String condition_1;
+        String condition_2;
+        String condition_3;
+        String column_edit;
+        String value_input;
+
 
         //create arraylist for invalid strings
         ArrayList<String> valid_inputs1 = new ArrayList<String>();
@@ -66,8 +72,49 @@ public class JDBC {
                     case("update"):
                         get_table_names();
                         System.out.println("Enter a table to update:");
-                        String table_name = keyboard.readLine();
+                        String table_input = keyboard.readLine();
+
+                        //add input checker here
                         System.out.println("conditions: [1], [2], [3]");
+                        input = keyboard.readLine();
+
+                        //each allows the amount of arguments for "conditions" on the update operation
+                        switch(input){
+                            case("1"):
+                                getCurrentTable(table_input);
+                                System.out.println("please enter a column to edit:)");
+                                column_edit = keyboard.readLine();
+                                System.out.println("please enter a value to update it with:");
+                                value_input = keyboard.readLine();
+
+                                System.out.println("please enter a condition:");
+                                condition_1 = keyboard.readLine();
+                                break;
+                            case("2"):
+                                System.out.println("please enter a column to edit:");
+                                column_edit = keyboard.readLine();
+                                System.out.println("please enter a value to update it with:");
+                                value_input = keyboard.readLine();
+
+                                System.out.println("please enter condition 1");
+                                condition_1 = keyboard.readLine();
+                                System.out.println("please enter condition 2");
+                                condition_2 = keyboard.readLine();
+                                break;
+                            case("3"):
+                                System.out.println("please enter a column to edit:");
+                                column_edit = keyboard.readLine();
+                                System.out.println("please enter a value to update it with:");
+                                value_input = keyboard.readLine();
+
+                                System.out.println("please enter condition 1");
+                                condition_1 = keyboard.readLine();
+                                System.out.println("please enter condition 2");
+                                condition_2 = keyboard.readLine();
+                                System.out.println("please enter condition 3");
+                                condition_3 = keyboard.readLine();
+                                break;
+                        }
 
 
                         /*while (rset.next()) {
@@ -133,6 +180,34 @@ public class JDBC {
             while (rset.next()) {
                 System.out.println(rset.getString(1));
                 table_names.add(rset.getString(1));
+            }
+        }catch (SQLException e){
+
+            System.out.println ("SQL Exception: " + e.getMessage());
+
+        }
+
+    }
+    //returns the specific table called with the function and its
+    public static void getCurrentTable(String a){
+        ArrayList<String> table_names = new ArrayList<>();
+        int count = 0;
+
+        try {
+            //ResultSet column_names = stmt.executeQuery("select column_name from ALL_TAB_COLUMNS where table_name ='"+ a+ "'");
+            ResultSet column_count = stmt.executeQuery("select count(*) from user_tables where table_name = '" + a+"'");
+            ResultSet rset = stmt.executeQuery("Select * from "+a);
+            ResultSetMetaData rsetmd = rset.getMetaData();
+            for(int v = 0; v < rsetmd.getColumnCount(); v++){
+                System.out.print(rsetmd.getColumnName(v+1)+" | ");
+            }
+            System.out.println();
+            while (rset.next()) {
+                for(int i = 0; i < rsetmd.getColumnCount(); i++) {
+                    System.out.print(rset.getString(i+1)+" | ");
+                    //System.out.println();
+                }
+                System.out.println();
             }
         }catch (SQLException e){
 
