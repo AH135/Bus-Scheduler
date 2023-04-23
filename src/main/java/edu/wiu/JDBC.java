@@ -66,31 +66,47 @@ public class JDBC {
                 switch (input) {
                     //this needs to show view options and then print them, don't need this for lab4 I think
                     case ("view"):
+                        System.out.println("not implemented");
 
                         break;
                     //this needs to allow user to update an existing table
                     case("update"):
-                        get_table_names();
+                        printTableNames();
                         System.out.println("Enter a table to update:");
                         String table_input = keyboard.readLine();
+                        ResultSet rset = stmt.executeQuery("Select * from "+table_input);
+                        ResultSetMetaData rsetmd = rset.getMetaData();
 
                         //add input checker here
-                        System.out.println("conditions: [1], [2], [3]");
+                        //this should be changed to have the rset and rsetmd as input variables
+                        printCurrentTable(table_input);
+
+
+                        System.out.println("[update table] or [exit]");
                         input = keyboard.readLine();
+
 
                         //each allows the amount of arguments for "conditions" on the update operation
                         switch(input){
-                            case("1"):
-                                getCurrentTable(table_input);
-                                System.out.println("please enter a column to edit:)");
+                            case("update table"):
+                                //printCurrentTable(table_input);
+                                System.out.println("please enter a column to edit:");
                                 column_edit = keyboard.readLine();
                                 System.out.println("please enter a value to update it with:");
                                 value_input = keyboard.readLine();
 
-                                System.out.println("please enter a condition:");
+                                System.out.println("please enter a row index (ID Number):");
                                 condition_1 = keyboard.readLine();
-                                break;
-                            case("2"):
+
+                                //do sql statement here
+                                System.out.println("update "+table_input+" set "+column_edit+" = "+value_input+" where "
+                                        +rsetmd.getColumnLabel(1)+" = "+condition_1);
+                                ResultSet rs = stmt.executeQuery("update "+table_input+" set "+column_edit+" = '"+value_input+"' where "
+                                        +rsetmd.getColumnLabel(1)+" = "+condition_1);
+                                printCurrentTable(table_input);
+                                //break;
+                            case("exit"):
+                                /*printCurrentTable(table_input);
                                 System.out.println("please enter a column to edit:");
                                 column_edit = keyboard.readLine();
                                 System.out.println("please enter a value to update it with:");
@@ -99,9 +115,10 @@ public class JDBC {
                                 System.out.println("please enter condition 1");
                                 condition_1 = keyboard.readLine();
                                 System.out.println("please enter condition 2");
-                                condition_2 = keyboard.readLine();
+                                condition_2 = keyboard.readLine();*/
                                 break;
-                            case("3"):
+                            /*case("3"):
+                                printCurrentTable(table_input);
                                 System.out.println("please enter a column to edit:");
                                 column_edit = keyboard.readLine();
                                 System.out.println("please enter a value to update it with:");
@@ -113,7 +130,7 @@ public class JDBC {
                                 condition_2 = keyboard.readLine();
                                 System.out.println("please enter condition 3");
                                 condition_3 = keyboard.readLine();
-                                break;
+                                break;*/
                         }
 
 
@@ -172,14 +189,14 @@ public class JDBC {
 
     //method just prints out the current user's tables that they have created.
     //for the future, an arraylist is uitilized for manipulation if needed.
-    public static void get_table_names(){
-        ArrayList<String> table_names = new ArrayList<>();
+    public static void printTableNames(){
+        //ArrayList<String> table_names = new ArrayList<>();
 
         try {
             ResultSet rset = stmt.executeQuery("Select table_name from user_tables");
             while (rset.next()) {
                 System.out.println(rset.getString(1));
-                table_names.add(rset.getString(1));
+                //table_names.add(rset.getString(1));
             }
         }catch (SQLException e){
 
@@ -189,8 +206,8 @@ public class JDBC {
 
     }
     //returns the specific table called with the function and its
-    public static void getCurrentTable(String a){
-        ArrayList<String> table_names = new ArrayList<>();
+    public static void printCurrentTable(String a){
+        //ArrayList<String> table_names = new ArrayList<>();
         int count = 0;
 
         try {
