@@ -16,8 +16,8 @@ public class JDBC {
         int original_empno =0;
         int empno;
         String condition_1;
-        String condition_2;
-        String condition_3;
+        //String condition_2;
+        //String condition_3;
         String column_edit;
         String value_input;
         String table_input;
@@ -68,7 +68,43 @@ public class JDBC {
                 switch (input) {
                     //this needs to show view options and then print them, don't need this for lab4 I think
                     case ("view"):
-                        System.out.println("not implemented");
+                        System.out.println("select view:");
+                        System.out.println("[join tables] [2] [3]");
+                        String view_input = keyboard.readLine();
+                        switch(view_input){
+                            case("join tables"):
+                                printTableNames();
+                                System.out.println("How many tables to join?");
+                                String table_join_count = keyboard.readLine();
+                                int table_join_count_int = Integer.parseInt(table_join_count);
+                                ArrayList<String> join_string_list = new ArrayList<>();
+
+                                for(int i = 1; i <= table_join_count_int; i++){
+                                    System.out.println("table to join "+i);
+                                    join_string_list.add(keyboard.readLine());
+
+                                }
+                                String join_statement = "Select * from ";
+                                for(int i = 0; i < join_string_list.size(); i++){
+                                    if(i == join_string_list.size()-1)
+                                        join_statement = join_statement + join_string_list.get(i)+"";
+                                    else
+                                        join_statement = join_statement + join_string_list.get(i)+", ";
+
+                                }
+                                System.out.println(join_statement);
+
+                                ResultSet join_rs = stmt.executeQuery(join_statement);
+
+                                print_resultset(join_rs);
+                                break;
+                            case("2"):
+                                break;
+                            case("3"):
+                                break;
+                        }
+
+
 
                         break;
                     //this needs to allow user to update an existing table
@@ -109,31 +145,8 @@ public class JDBC {
                                 conn.commit();
                                 //break;
                             case("exit"):
-                                /*printCurrentTable(table_input);
-                                System.out.println("please enter a column to edit:");
-                                column_edit = keyboard.readLine();
-                                System.out.println("please enter a value to update it with:");
-                                value_input = keyboard.readLine();
 
-                                System.out.println("please enter condition 1");
-                                condition_1 = keyboard.readLine();
-                                System.out.println("please enter condition 2");
-                                condition_2 = keyboard.readLine();*/
                                 break;
-                            /*case("3"):
-                                printCurrentTable(table_input);
-                                System.out.println("please enter a column to edit:");
-                                column_edit = keyboard.readLine();
-                                System.out.println("please enter a value to update it with:");
-                                value_input = keyboard.readLine();
-
-                                System.out.println("please enter condition 1");
-                                condition_1 = keyboard.readLine();
-                                System.out.println("please enter condition 2");
-                                condition_2 = keyboard.readLine();
-                                System.out.println("please enter condition 3");
-                                condition_3 = keyboard.readLine();
-                                break;*/
                         }
 
 
@@ -288,6 +301,26 @@ public class JDBC {
             System.out.println ("SQL Exception: " + e.getMessage());
 
         }
+
+    }
+    public static void print_resultset(ResultSet input){
+        try {
+            ResultSetMetaData input_md = input.getMetaData();
+            for(int i = 1; i <= input_md.getColumnCount(); i++){
+                System.out.print(input_md.getColumnName(i)+" | ");
+            }
+            while (input.next()) {
+                for(int i = 0; i < input_md.getColumnCount(); i++) {
+                    System.out.print(input.getString(i+1)+" | ");
+                    //System.out.println();
+                }
+                System.out.println();
+            }
+        }catch (SQLException e) {
+
+            System.out.println("SQL Exception: " + e.getMessage());
+        }
+
 
     }
 
