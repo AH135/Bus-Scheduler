@@ -20,6 +20,9 @@ public class JDBC {
         String condition_3;
         String column_edit;
         String value_input;
+        String table_input;
+        ResultSet rset;
+        ResultSetMetaData rsetmd;
 
 
         //create arraylist for invalid strings
@@ -73,9 +76,9 @@ public class JDBC {
                     case("update"):
                         printTableNames();
                         System.out.println("Enter a table to update:");
-                        String table_input = keyboard.readLine();
-                        ResultSet rset = stmt.executeQuery("Select * from "+table_input);
-                        ResultSetMetaData rsetmd = rset.getMetaData();
+                        table_input = keyboard.readLine();
+                        rset = stmt.executeQuery("Select * from "+table_input);
+                        rsetmd = rset.getMetaData();
 
                         //add input checker here
                         //this should be changed to have the rset and rsetmd as input variables
@@ -101,7 +104,7 @@ public class JDBC {
                                 //do sql statement here
                                 System.out.println("update "+table_input+" set "+column_edit+" = "+value_input+" where "
                                         +rsetmd.getColumnLabel(1)+" = "+condition_1);
-                                ResultSet rs = stmt.executeQuery("update "+table_input+" set "+column_edit+" = '"+value_input+"' where "
+                                stmt.executeUpdate("update "+table_input+" set "+column_edit+" = '"+value_input+"' where "
                                         +rsetmd.getColumnLabel(1)+" = "+condition_1);
                                 printCurrentTable(table_input);
                                 //break;
@@ -134,12 +137,64 @@ public class JDBC {
                         }
 
 
+
                         /*while (rset.next()) {
                             System.out.println(rset.getString(1));
                         }*/
                         break;
                     //this needs to allow the user to insert into an existing table
                     case("insert"):
+                        printTableNames();
+                        System.out.println("Enter a table to update:");
+                        table_input = keyboard.readLine();
+                        rset = stmt.executeQuery("Select * from "+table_input);
+                        rsetmd = rset.getMetaData();
+                        ArrayList<String> input_value_list = new ArrayList<>();
+                        String insert_statement;
+
+                        //add input checker here
+                        //this should be changed to have the rset and rsetmd as input variables
+                        printCurrentTable(table_input);
+
+
+                        System.out.println("[add entry] or [exit]");
+                        input = keyboard.readLine();
+                        switch(input){
+                            case("add entry"):
+                                for(int i = 2; i <= rsetmd.getColumnCount(); i++){
+                                    System.out.println("enter value for "+rsetmd.getColumnName(i));
+                                    input_value_list.add(keyboard.readLine());
+                                    //System.out.println(input_value_list.get(i-2));
+                                }
+                                insert_statement = "insert into "+table_input+" (";
+                                for(int i = 2;i<=rsetmd.getColumnCount(); i++){
+                                    if(i == rsetmd.getColumnCount())
+                                        insert_statement = insert_statement+rsetmd.getColumnName(i);
+                                    else
+                                        insert_statement = insert_statement+rsetmd.getColumnName(i)+", ";
+                                }
+                                insert_statement = insert_statement+") values (";
+                                for(int i = 0; i < input_value_list.size(); i++){
+                                    if(i == input_value_list.size()-1)
+                                        insert_statement = insert_statement+"'"+input_value_list.get(i)+"'";
+                                    else
+                                        insert_statement = insert_statement+"'"+input_value_list.get(i)+"'"+", ";
+                                }
+                                insert_statement = insert_statement+")";
+                                //System.out.println(insert_statement);
+                                stmt.executeUpdate(insert_statement);
+
+
+
+
+
+
+
+                                break;
+                            case("exit"):
+                                break;
+                        }
+
                         break;
                 }
 
