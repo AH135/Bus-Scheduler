@@ -37,7 +37,6 @@ public class JDBC {
         try{
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
             System.out.println("Registered the driver...");
-
             conn = DriverManager.getConnection(
                     "jdbc:oracle:thin:@oracle2.wiu.edu:1521/orclpdb1",
                     username,password);
@@ -107,6 +106,7 @@ public class JDBC {
                                 stmt.executeUpdate("update "+table_input+" set "+column_edit+" = '"+value_input+"' where "
                                         +rsetmd.getColumnLabel(1)+" = "+condition_1);
                                 printCurrentTable(table_input);
+                                conn.commit();
                                 //break;
                             case("exit"):
                                 /*printCurrentTable(table_input);
@@ -183,6 +183,8 @@ public class JDBC {
                                 insert_statement = insert_statement+")";
                                 //System.out.println(insert_statement);
                                 stmt.executeUpdate(insert_statement);
+                                conn.commit();
+                                printCurrentTable(table_input);
 
 
 
