@@ -9,6 +9,8 @@ public class Program {
     private Connection conn;
     private Statement stmt;
     private BufferedReader keyboard;
+
+    ArrayList<User> employeeList = new ArrayList<>();
     //program constructor
     public Program(Connection input_conn, Statement input_stat, BufferedReader input_keyboard){
         conn = input_conn;

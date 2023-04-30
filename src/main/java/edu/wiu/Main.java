@@ -19,8 +19,12 @@ public class Main {
         //System.out.println("this is the for the class CS 470");
         System.out.println("please login to your employee account:");
         input_username = keyboard.readLine();
+
+        //objects for passing on to the main program
         conn = makeConnection();
         stmt = createStatement(conn);
+
+        //program object houses functions that bring the rest of the objects together
         Program main_program = new Program(conn, stmt, keyboard);
 
 
