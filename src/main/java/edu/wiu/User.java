@@ -9,12 +9,12 @@ public class User {
     private int rank;
 
     public User(String name, int rank){
-        if(rank>2)
-            rank = 2;
+        if(rank > 2)
+            this.rank = 2;
         else if(rank < 0)
-            rank = 0;
+            this.rank = 0;
         else
-            rank = 1;
+            this.rank = 1;
         this.username = name;
 
     }
@@ -22,9 +22,22 @@ public class User {
     public int getRankInt() {
         return rank;
     }
+    public int setRank(int rank){
+        if(rank > 2)
+            this.rank = 2;
+        else if(rank < 0)
+            this.rank = 0;
+        else
+            this.rank = 1;
+        return this.rank;
+    }
 
     public String getUsername() {
         return username;
+    }
+    public String setUsername(String name){
+        this.username = name;
+        return this.username;
     }
     public String getRankString(){
         return rank_def[rank];
