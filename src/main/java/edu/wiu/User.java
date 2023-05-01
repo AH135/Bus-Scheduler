@@ -1,6 +1,7 @@
 package edu.wiu;
 
 public class User {
+    private int emp_id;
     private String username;
     private String[] rank_def = {"Employee", "Manager", "Admin"};
     //rank 0 == employee
@@ -8,6 +9,7 @@ public class User {
     //rank 2 == admin
     private int rank;
 
+    //used to create new user
     public User(String name, int rank){
         if(rank > 2)
             this.rank = 2;
@@ -18,10 +20,30 @@ public class User {
         this.username = name;
 
     }
+    //use this to fetch user from database
+    public User(){
+        //need the sql methods
+
+
+
+    }
+    public int getEmp_id(){
+        return emp_id;
+    }
 
     public int getRankInt() {
         return rank;
     }
+
+    //this should be changed to a database method prolly, but this works for now
+    public String getRankString(){
+        return rank_def[rank];
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
     public int setRank(int rank){
         if(rank > 2)
             this.rank = 2;
@@ -32,17 +54,9 @@ public class User {
         return this.rank;
     }
 
-    public String getUsername() {
-        return username;
-    }
     public String setUsername(String name){
         this.username = name;
         return this.username;
-    }
-
-    //this should be changed to a database method prolly, but this works too
-    public String getRankString(){
-        return rank_def[rank];
     }
 
     //sql functions
