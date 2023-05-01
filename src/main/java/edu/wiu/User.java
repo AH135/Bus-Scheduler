@@ -39,6 +39,8 @@ public class User {
         this.username = name;
         return this.username;
     }
+
+    //this should be changed to a database method prolly, but this works too
     public String getRankString(){
         return rank_def[rank];
     }
