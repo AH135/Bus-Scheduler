@@ -2,7 +2,6 @@ package edu.wiu;
 //import statements for java sql
 import java.sql.*;
 import java.io.*;
-import java.util.*;
 
 public class Main {
     static Connection conn;
@@ -17,8 +16,8 @@ public class Main {
         String input_username;
 
         //System.out.println("this is the for the class CS 470");
-        System.out.println("please login to your employee account:");
-        input_username = keyboard.readLine();
+        //System.out.println("please login to your employee account:");
+        //input_username = keyboard.readLine();
 
         //objects for passing on to the main program
         conn = makeConnection();
@@ -26,6 +25,8 @@ public class Main {
 
         //program object houses functions that bring the rest of the objects together
         Program main_program = new Program(conn, stmt, keyboard);
+        User test2 = new User (3, stmt);
+        System.out.println(test2.toString());
 
 
 
