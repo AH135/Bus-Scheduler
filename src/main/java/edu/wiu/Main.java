@@ -25,7 +25,7 @@ public class Main {
 
         //program object houses functions that bring the rest of the objects together
         Program main_program = new Program(conn, stmt, keyboard);
-        User test2 = new User (3, stmt);
+        User test2 = new User (4, stmt);
         System.out.println(test2.toString());
 
 

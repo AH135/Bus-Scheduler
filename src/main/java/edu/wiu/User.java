@@ -27,9 +27,9 @@ public class User {
     public User(int emp_id, Statement stmt){
         //need the sql methods
         this.emp_id = emp_id;
-        fetch_Name(emp_id,stmt);
-        fetch_Rank(emp_id,stmt);
-        fetch_Rank_String(emp_id,stmt);
+        this.username = fetch_Name(emp_id,stmt);
+        this.rank = fetch_Rank(emp_id,stmt);
+        this.rankString = fetch_Rank_String(emp_id,stmt);
 
 
     }
@@ -81,48 +81,51 @@ public class User {
     //need a function that will populate a User object with a given row. this should only handle one user per function call
 
     //fetches the selected user from the database with the input value and puts it into the username variable
-    public String fetch_Name(int rowNumber, Statement stmt){
+    private String fetch_Name(int rowNumber, Statement stmt){
         //code here
+        String output = null;
         try {
             ResultSet result_User = stmt.executeQuery("Select NAME From Employee Where Emp_ID = "+rowNumber);
             result_User.next();
             //System.out.println(result_User.getString("name"));
-            this.username = result_User.getString("name");
+            output = result_User.getString("name");
         }catch(SQLException e){
             System.out.println("SQL Exception: " + e.getMessage());
             System.out.println("problem in fetch_name");
         }
 
-        return username;
+        return output;
     }
     //returns the integer from the database and enters it into the
-    public int fetch_Rank(int rowNumber, Statement stmt){
+    private int fetch_Rank(int rowNumber, Statement stmt){
         //code here
+        int output = -1;
         try {
             ResultSet result_User = stmt.executeQuery("Select rank_ID From Employee Where Emp_ID = "+rowNumber);
             result_User.next();
             //System.out.println(result_User.getString("name"));
-            this.rank = Integer.parseInt(result_User.getString("rank_ID"));
+            output = Integer.parseInt(result_User.getString("rank_ID"));
         }catch(SQLException e){
             System.out.println("SQL Exception: " + e.getMessage());
             System.out.println("problem in fetch_rank");
         }
-        return rank;
+        return output;
     }
     //uses the input row index to return the rankstring of the given user
-    public String fetch_Rank_String(int rowNumber, Statement stmt){
+    private String fetch_Rank_String(int rowNumber, Statement stmt){
         //code here
+        String output = null;
         try {
             ResultSet result_User = stmt.executeQuery("Select emp_id, rankname From Employee inner join rank on " +
                     "employee.rank_ID = rank.rank_id where emp_id = "+rowNumber);
             result_User.next();
             //System.out.println(result_User.getString("rankname"));
-            this.rankString = result_User.getString("rankname");
+            output = result_User.getString("rankname");
         }catch(SQLException e){
             System.out.println("SQL Exception: " + e.getMessage());
             System.out.println("problem in fetch_rank_String");
         }
-        return rankString;
+        return output;
     }
 
     @Override

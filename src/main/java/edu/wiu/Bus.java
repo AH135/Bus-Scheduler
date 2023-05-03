@@ -16,14 +16,15 @@ public class Bus {
     }
 
     //this needs to contact the DB and return the string from the Bus "Table" for the license of the bus
-    public String populateLicense(int bus_ID){
+    public String fetch_License(int bus_ID){
 
 
         return "not implemented";
     }
-    public int populatebus_ID(int bus_ID){
+    public int fetch_bus_ID(int bus_ID){
 
 
         return 0;
     }
+
 }
