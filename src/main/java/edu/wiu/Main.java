@@ -28,6 +28,9 @@ public class Main {
         User test2 = new User (4, stmt);
         System.out.println(test2.toString());
 
+        Bus test_bus = new Bus(1, stmt);
+        System.out.println(test_bus);
+
 
 
 
