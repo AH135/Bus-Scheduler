@@ -25,6 +25,7 @@ public class Program {
         employeeList = fetch_employeeList(getStmt());
         routeList = fetch_routelist(getStmt());
         busList = fetch_buslist(getStmt());
+        runList = fetch_runlist(stmt, routeList, employeeList, busList);
 
 
     }
@@ -80,9 +81,56 @@ public class Program {
 
     }
 
-    /*private fetch_runlist(Statement stmt){
+    private ArrayList<Run> fetch_runlist(Statement stmt, ArrayList<Route> Routelist, ArrayList<User> userlist, ArrayList<Bus> buslist){
+        ArrayList<Run> output = new ArrayList<>();
+        int Run_ID;
+        String Start_Time;
+        String Finish_Time;
+        int Day_ID;
+        int Emp_ID;
+        int Bus_ID;
 
-    }*/
+        User runemployee = null;
+        Bus  runbus = null;
+
+
+        try{
+            ResultSet result = stmt.executeQuery("Select * from run");
+            while(result.next()){
+                Run_ID = Integer.parseInt(result.getString(1));
+                Start_Time = result.getString(2);
+                Finish_Time = result.getString(3);
+                Day_ID = Integer.parseInt(result.getString(4));
+
+                //this should search the employee list for the given index
+                Emp_ID = Integer.parseInt(result.getString(5));
+                for(int i = 0; i < userlist.size(); i++){
+                    if(Emp_ID == userlist.get(i).getEmp_id()) {
+                        runemployee = userlist.get(i);
+                    }
+                }
+                //this should search the bus list for the given index
+                Bus_ID = Integer.parseInt(result.getString(6));
+                for(int i = 0; i < buslist.size(); i++){
+                    if(Bus_ID == buslist.get(i).getBus_ID()) {
+                        runbus = buslist.get(i);
+                    }
+                }
+                output.add(new Run(Run_ID, Start_Time,Finish_Time, Day_ID,runemployee, runbus, Routelist));
+
+            }
+
+
+        }catch(SQLException e){
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in fetch_rank");
+        }
+       //System.out.println(output);
+        return output;
+
+
+
+    }
 
 
     //input is a statement variable and the string name of the table

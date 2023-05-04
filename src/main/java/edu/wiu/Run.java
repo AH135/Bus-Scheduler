@@ -1,5 +1,8 @@
 package edu.wiu;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Run {
@@ -7,7 +10,7 @@ public class Run {
     private ArrayList<Route> route_list = new ArrayList<>();
     private String start_time;
     private String finish_time;
-    private String day;
+    private int day;
     private User run_worker;
     private Bus run_bus;
 
@@ -15,7 +18,34 @@ public class Run {
 
 
     //run constructor
-    public Run(){
+    public Run(Integer run_ID, String start_time, String finish_time,
+               int day, User run_worker,Bus run_bus, ArrayList<Route> Routelist){
+        this.run_ID = run_ID;
+        this.start_time = start_time;
+        this.finish_time = finish_time;
+        this.day = day;
+        this.run_worker = run_worker;
+        this.run_bus = run_bus;
+
+        Statement run_stmt = Main.createStatement(Main.conn);
+        try {
+            ResultSet Run_result = run_stmt.executeQuery("Select route_ID from run join run_route_list " +
+                    "on run.run_id = run_route_list.run_id where run.run_Id ="+getRun_ID());
+            while(Run_result.next()){
+                for(int i = 0; i <= route_list.size();i++){
+                    if(Integer.parseInt(Run_result.getString(1)) == Routelist.get(i).getRoute_ID()){
+                        route_list.add(Routelist.get(i));
+                    }
+                }
+
+            }
+
+        }catch (SQLException e){
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in run constructor");
+
+        }
+
 
     }
 
@@ -35,7 +65,7 @@ public class Run {
         return finish_time;
     }
 
-    public String getDay() {
+    public int getDay() {
         return day;
     }
 
@@ -51,6 +81,19 @@ public class Run {
         return sql_tablename;
     }
 
+    @Override
+    public String toString() {
+        return "Run{" +
+                "run_ID=" + run_ID +
+                ", route_list=" + route_list +
+                ", start_time='" + start_time + '\'' +
+                ", finish_time='" + finish_time + '\'' +
+                ", day=" + day +
+                ", run_worker=" + run_worker +
+                ", run_bus=" + run_bus +
+                ", sql_tablename='" + sql_tablename + '\'' +
+                '}';
+    }
     //sql fetch methods here
 
 
