@@ -11,6 +11,8 @@ public class Run {
     private User run_worker;
     private Bus run_bus;
 
+    private String sql_tablename = "run";
+
 
     //run constructor
     public Run(){
@@ -43,6 +45,10 @@ public class Run {
 
     public Bus getRun_bus() {
         return run_bus;
+    }
+
+    public String getSql_tablename() {
+        return sql_tablename;
     }
 
     //sql fetch methods here

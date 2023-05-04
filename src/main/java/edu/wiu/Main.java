@@ -33,8 +33,10 @@ public class Main {
 
         Stop stop_test = new Stop(1, stmt);
         System.out.println(stop_test);
+        System.out.println(main_program.fetch_table_size(stmt,"employee"));
 
-
+        Route route_test = new Route(stmt, 1, main_program);
+        System.out.println(route_test.toString());
 
 
 
@@ -66,4 +68,5 @@ public class Main {
         }
         return return_statement;
     }
+
 }

@@ -30,6 +30,24 @@ public class Program {
         return this.keyboard;
     }
 
+    //input is a statement variable and the string name of the table
+    public Integer fetch_table_size(Statement stmt, String table) {
+        Integer output = null;
+        try {
+            ResultSet result = stmt.executeQuery("Select count(*) from " + table);
+            result.next();
+            output = Integer.parseInt(result.getString(1));
+
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in fetch_table_size");
+        }
+        return output;
+
+    }
+
+
+
 
 
 }

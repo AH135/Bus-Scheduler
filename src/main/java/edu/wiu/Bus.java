@@ -5,8 +5,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Bus {
+
     private String license;
     private int bus_ID;
+
+    private String sql_tablename = "bus";
 
     //bus constructor requires the index ID to populate
     public Bus(int bus_ID, Statement stmt){
@@ -21,6 +24,10 @@ public class Bus {
     }
     public int getBus_ID(){
         return bus_ID;
+    }
+
+    public String getSql_tablename() {
+        return sql_tablename;
     }
 
     //this needs to contact the DB and return the string from the Bus "Table" for the license of the bus

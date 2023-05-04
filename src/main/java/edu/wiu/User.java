@@ -11,6 +11,7 @@ public class User {
     //rank 2 == admin
     private int rank;
     private String rankString;
+    private String sql_tablename = "employee";
 
     //used to create new user
     public User(String name, int rank){
@@ -54,6 +55,11 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public String getSql_tablename() {
+        return sql_tablename;
+    }
+
 
     public int setRank(int rank){
         if(rank > 2)
