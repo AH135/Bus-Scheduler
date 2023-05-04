@@ -35,8 +35,10 @@ public class Main {
         System.out.println(stop_test);
         System.out.println(main_program.fetch_table_size(stmt,"employee"));
 
-        Route route_test = new Route(stmt, 1, main_program);
+        Route route_test = new Route(1,stmt);
         System.out.println(route_test.toString());
+
+        System.out.println(main_program.toString());
 
 
 

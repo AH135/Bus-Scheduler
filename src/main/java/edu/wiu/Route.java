@@ -14,12 +14,12 @@ public class Route {
     private String sql_tablename = "route";
 
     //constructor needs a row, a statement, and a main program for the functions in that class/.
-    public Route(Statement stmt, int route_ID, Program main_program ){
+    public Route( int route_ID, Statement stmt){
         this.route_ID = route_ID;
         this.route_name = fetch_Route_name(route_ID, stmt);
         this.route_Time = fetch_Route_name(route_ID, stmt);
-        this.fetch_Stop_list(route_ID, stmt, main_program);
-        this.Stop_list = fetch_Stop_list(route_ID, stmt, main_program);
+        this.fetch_Stop_list(route_ID, stmt);
+        this.Stop_list = fetch_Stop_list(route_ID, stmt);
 
 
 
@@ -84,7 +84,7 @@ public class Route {
     }
     //this should populate an arraylist of stops and return it for the given route
     //omg i got it to work, needed a second statement so it wouldn't break when running the stops
-    public ArrayList<Stop> fetch_Stop_list(int rowNumber, Statement stmt, Program M_program) {
+    public ArrayList<Stop> fetch_Stop_list(int rowNumber, Statement stmt) {
         ArrayList<Stop> output = new ArrayList<>();
         Statement stmt2 = Main.createStatement(Main.conn);
 
