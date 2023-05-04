@@ -31,6 +31,9 @@ public class Main {
         Bus test_bus = new Bus(1, stmt);
         System.out.println(test_bus);
 
+        Stop stop_test = new Stop(1, stmt);
+        System.out.println(stop_test);
+
 
 
 
