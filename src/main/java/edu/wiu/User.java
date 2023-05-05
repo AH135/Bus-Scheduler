@@ -5,7 +5,7 @@ import java.sql.*;
 public class User {
     private int emp_id;
     private String username;
-    //private String[] rank_def = {"Employee", "Manager", "Admin"};
+    private String[] rank_def = {"Employee", "Manager", "Admin"};
     //rank 0 == employee
     //rank 1 == manager
     //rank 2 == admin
@@ -47,6 +47,7 @@ public class User {
         return rank;
     }
 
+
     //this should be changed to a database method prolly, but this works for now
     public String getRankString(){
         return rankString;
@@ -62,9 +63,9 @@ public class User {
 
 
     public int setRank(int rank){
-        if(rank > 2)
+        if(rank >= 2)
             this.rank = 2;
-        else if(rank < 0)
+        else if(rank <= 0)
             this.rank = 0;
         else
             this.rank = 1;
@@ -79,7 +80,20 @@ public class User {
     //sql functions
 
     //need function to upload a user into a new entry in the "employees" table
-    public void uploadUser(){
+    public void uploadnewUser(Statement stmt){
+        this.emp_id = Main.main_program.fetch_table_size(stmt,"employee")+1;
+
+        String s = new String("insert into Employee (emp_id, name, rank_id) values ("+this.getEmp_id()+",'"+this.getUsername()+"', " +
+                this.getRankInt()+")");
+        System.out.println(s);
+        try{
+            ResultSet result = stmt.executeQuery(s);
+            result.next();
+
+        }catch(SQLException e){
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in uploaduser");
+        }
 
 
     }
@@ -134,6 +148,18 @@ public class User {
         return output;
     }
 
+    public void deleteUser(Statement stmt) {
+        try{
+            ResultSet result = stmt.executeQuery("Delete from Employee where emp_id ="+this.emp_id);
+            result.next();
+
+        }catch(SQLException e){
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in deleteUser");
+        }
+
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -143,4 +169,5 @@ public class User {
                 ", rankString='" + rankString + '\'' +
                 '}';
     }
+
 }

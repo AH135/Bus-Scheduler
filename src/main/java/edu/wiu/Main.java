@@ -7,6 +7,7 @@ public class Main {
     static Connection conn;
     static Statement stmt;
     static BufferedReader keyboard;
+    static Program main_program;
 
 
 
@@ -24,12 +25,12 @@ public class Main {
 
         //program object houses functions that bring the rest of the objects together
         System.out.println("Loading, please wait.");
-        Program main_program = new Program(conn, stmt, keyboard);
+        main_program = new Program(conn, stmt, keyboard);
 
         //loops through the welcome screen until a user is found
         main_program.setCurrent_User(main_program.user_login(main_program.getEmployeeList(), keyboard));
         System.out.println("Welcome "+main_program.getCurrent_User().getUsername()+ ".");
-        System.out.println("Logged in as"+ main_program.getCurrent_User().getRankString());
+        System.out.println("Logged in as "+ main_program.getCurrent_User().getRankString());
 
         while(true) {
 
@@ -63,7 +64,8 @@ public class Main {
                                 main_program.viewMenu(keyboard);
                                 break;
                             case("manage"):
-                                
+                                main_program.viewManage(keyboard);
+
                                 break;
                             case("exit"):
                                 check_m1 = true;
@@ -73,6 +75,7 @@ public class Main {
                         }
 
                     }
+                    break;
 
                 case ("Admin"):
                     System.out.println("not implemented");

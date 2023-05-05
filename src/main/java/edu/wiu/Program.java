@@ -198,15 +198,19 @@ public class Program {
             System.out.println("[run] [bus] [route] [user] | [go back]");
             switch (keyboard.readLine()) {
                 case ("run"):
+                    System.out.println("Current Runs:");
                     System.out.println(getRunList().toString());
                     break;
                 case("bus"):
+                    System.out.println("Current Buses:");
                     System.out.println(getBusList().toString());
                     break;
                 case("route"):
+                    System.out.println("Current Routes:");
                     System.out.println(getRouteList().toString());
                     break;
                 case("user"):
+                    System.out.println("Current Users:");
                     System.out.println(getEmployeeList().toString());
                     break;
                 case("go back"):
@@ -218,6 +222,134 @@ public class Program {
             }
         }
     }
+
+    //handles the manage screen, should house all options for that tree.
+    public void viewManage(BufferedReader keyboard) throws IOException {
+        Boolean check_view_done = false;
+        Boolean check_view_done2 = false;
+        while(check_view_done == false) {
+            System.out.println("would you like to manage: ");
+            System.out.println(" [user] | [go back]");
+            switch (keyboard.readLine()) {
+
+                case("user"):
+                    System.out.println("Current Users:");
+                    System.out.println(getEmployeeList().toString());
+                    while(check_view_done2 == false){
+                        System.out.println("What would you like to do to users?");
+                        System.out.println("[add user] [remove user] [edit user] | [go back]");
+                        switch(keyboard.readLine()){
+                            case("add user"):
+                                User new_user = ((User) addObject("User", keyboard));
+                                new_user.uploadnewUser(stmt);
+                                this.getEmployeeList().add(new_user);
+                                break;
+                            case("remove user"):
+                                User user_to_delete = ((User) this.removeObject("User", keyboard));
+                                user_to_delete.deleteUser(stmt);
+                                for(int i = 0; i< getEmployeeList().size(); i++){
+                                    if(user_to_delete.getEmp_id() == getEmployeeList().get(i).getEmp_id()){
+                                        getEmployeeList().remove(i);
+                                    }
+                                }
+                                break;
+                            case("edit user"):
+                                break;
+                            case("go back"):
+                                check_view_done2 = true;
+                                break;
+                            default:
+                                System.out.println("Invalid input, try again.");
+                        }
+                    }
+                    break;
+                case("go back"):
+                    check_view_done = true;
+                    break;
+                default:
+                    System.out.println("Invalid input, try again.");
+
+            }
+        }
+    }
+
+    //inputs an object, and then outputs the created object, should be scalable to different classes
+    public Object addObject(String input,BufferedReader keyboard) throws IOException {
+        switch(input) {
+            case ("User"):
+                String name = null;
+                int rank = -1;
+                System.out.println("Name of new user?");
+                name = keyboard.readLine();
+                System.out.println("rank of new user?");
+                System.out.println("Employee [0]\n Manager [1]\n Admin [2]");
+                Boolean rank_check = false;
+                while (rank_check == false) {
+                    switch (keyboard.readLine()) {
+                        case ("0"):
+                            rank = 0;
+                            rank_check= true;
+                            break;
+                        case ("1"):
+                            rank = 1;
+                            rank_check= true;
+                            break;
+                        case ("2"):
+                            rank = 2;
+                            rank_check= true;
+                            break;
+                        default:
+                            System.out.println("Wrong input, try again.");
+
+                    }
+                }
+                User output_user = new User(name, rank);
+                return output_user;
+
+            default:
+                System.out.println("invalid object ERROR");
+                return null;
+        }
+    }
+    public Object removeObject(String input,BufferedReader keyboard) throws IOException {
+        boolean does_it_exist = false;
+        switch(input) {
+            case ("User"):
+                User object_to_delete = null;
+                int emp_id = -1;
+                System.out.println("ID of user to delete:");
+                while(does_it_exist == false) {
+                    while (emp_id == -1) {
+                        try {
+                            emp_id = Integer.parseInt(keyboard.readLine());
+                        } catch (NumberFormatException e) {
+                            System.out.println("not a valid input, please enter a number");
+                        }
+                        if(emp_id != -1) {
+                            for (int i = 0; i < this.getEmployeeList().size(); i++) {
+                                if (this.getEmployeeList().get(i).getEmp_id() == emp_id) {
+                                    does_it_exist = true;
+                                    object_to_delete = this.getEmployeeList().get(i);
+                                    break;
+                                } else {
+                                    System.out.println("not an existing employee, please try again.");
+                                    emp_id = -1;
+                                }
+                            }
+                        }
+                    }
+                }
+            return object_to_delete;
+
+
+
+            default:
+                System.out.println("invalid object ERROR");
+                return null;
+
+        }
+    }
+
 
     @Override
     public String toString() {
