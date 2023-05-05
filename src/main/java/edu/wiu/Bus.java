@@ -48,9 +48,10 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "Bus{" +
+        return "\nBus{" +
                 "license='" + license + '\'' +
                 ", bus_ID=" + bus_ID +
                 '}';
     }
 }
+

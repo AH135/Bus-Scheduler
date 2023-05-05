@@ -110,12 +110,12 @@ public class Route {
     @Override
     public String toString() {
         //String listString = Stop_list.stream().map(Object::toString).collect(Collectors.joining(", "));
-        return "Route{" +
-                "route_ID=" + route_ID +
-                ", route_name='" + route_name + '\'' +
-                ", route_Time='" + route_Time + '\'' +
-                ", Stop_list=" + Stop_list +
-                ", sql_tablename='" + sql_tablename + '\'' +
+        return "\nRoute{" +
+                "\n  route_ID=" + route_ID +
+                "\n  route_name='" + route_name + '\'' +
+                "\n  route_Time='" + route_Time + '\'' +
+                "\n  Stop_list=" + Stop_list +
+                "\n  sql_tablename='" + sql_tablename + '\'' +
                 '}';
     }
 }

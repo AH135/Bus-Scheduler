@@ -85,11 +85,11 @@ public class Stop {
 
     @Override
     public String toString() {
-        return "Stop{" +
-                "stop_id=" + stop_id +
-                ", street='" + street + '\'' +
-                ", stop_location='" + stop_location + '\'' +
-                ", pickup_time='" + pickup_time + '\'' +
+        return "\n   Stop{" +
+                "\n    stop_id=" + stop_id +
+                "\n    street='" + street + '\'' +
+                "\n    stop_location='" + stop_location + '\'' +
+                "\n    pickup_time='" + pickup_time + '\'' +
                 '}';
     }
 }

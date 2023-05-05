@@ -83,15 +83,15 @@ public class Run {
 
     @Override
     public String toString() {
-        return "Run{" +
-                "run_ID=" + run_ID +
-                ", route_list=" + route_list +
-                ", start_time='" + start_time + '\'' +
-                ", finish_time='" + finish_time + '\'' +
-                ", day=" + day +
-                ", run_worker=" + run_worker +
-                ", run_bus=" + run_bus +
-                ", sql_tablename='" + sql_tablename + '\'' +
+        return "\nRun{" +
+                "\nrun_ID=" + run_ID +
+                "\n route_list=" + route_list +
+                "\n start_time='" + start_time + '\'' +
+                "\n finish_time='" + finish_time + '\'' +
+                "\n day=" + day +
+                "\n run_worker=" + run_worker +
+                "\n run_bus=" + run_bus +
+                "\n sql_tablename='" + sql_tablename + '\'' +
                 '}';
     }
     //sql fetch methods here

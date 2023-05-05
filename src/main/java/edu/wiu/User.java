@@ -234,11 +234,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "emp_id=" + emp_id +
-                ", username='" + username + '\'' +
-                ", rank=" + rank +
-                ", rankString='" + rankString + '\'' +
+        return "\nUser{" +
+                "\n  emp_id=" + emp_id +
+                "\n  username='" + username + '\'' +
+                "\n  rank=" + rank +
+                "\n  rankString='" + rankString + '\'' +
                 '}';
     }
 
