@@ -1,5 +1,8 @@
 package edu.wiu;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.Buffer;
 import java.sql.*;
 
 public class User {
@@ -81,19 +84,23 @@ public class User {
 
     //need function to upload a user into a new entry in the "employees" table
     public void uploadnewUser(Statement stmt){
-        this.emp_id = Main.main_program.fetch_table_size(stmt,"employee")+1;
+
+        this.emp_id = Main.main_program.fetch_table_size(stmt, "employee") + 1;
+
 
         String s = new String("insert into Employee (emp_id, name, rank_id) values ("+this.getEmp_id()+",'"+this.getUsername()+"', " +
                 this.getRankInt()+")");
-        System.out.println(s);
+        //System.out.println(s);
         try{
             ResultSet result = stmt.executeQuery(s);
             result.next();
+            //Main.conn.commit();
 
         }catch(SQLException e){
             System.out.println("SQL Exception: " + e.getMessage());
             System.out.println("problem in uploaduser");
         }
+        this.rankString = this.fetch_Rank_String(this.emp_id,stmt);
 
 
     }
@@ -152,12 +159,77 @@ public class User {
         try{
             ResultSet result = stmt.executeQuery("Delete from Employee where emp_id ="+this.emp_id);
             result.next();
+            //Main.conn.commit();
 
         }catch(SQLException e){
             System.out.println("SQL Exception: " + e.getMessage());
             System.out.println("problem in deleteUser");
         }
 
+    }
+    public void updateUser(Statement stmt, BufferedReader keyboard) {
+        try{
+        System.out.println(this.toString());
+        System.out.println("Which element do you want to change?");
+        System.out.println("[name] [rank]");
+        String new_name;
+        int new_rank = -1;
+        ResultSet result;
+
+        boolean inputcheck = false;
+        while(inputcheck == false) {
+            switch (keyboard.readLine()) {
+                case ("name"):
+                    System.out.println("enter a value:");
+                    new_name = keyboard.readLine();
+                    result = stmt.executeQuery("update employee set name = '"+new_name+"' where emp_id = "+this.emp_id);
+                    result.next();
+                    //Main.conn.commit();
+
+                    inputcheck = true;
+                    break;
+                case ("rank"):
+                    System.out.println("enter a value:");
+                    Boolean rank_check = false;
+                    while (rank_check == false) {
+                        switch (keyboard.readLine()) {
+                            case ("0"):
+                                new_rank = 0;
+                                rank_check= true;
+                                break;
+                            case ("1"):
+                                new_rank = 1;
+                                rank_check= true;
+                                break;
+                            case ("2"):
+                                new_rank = 2;
+                                rank_check= true;
+                                break;
+                            default:
+                                System.out.println("Wrong input, try again.");
+
+                        }
+                    }
+
+
+                    result = stmt.executeQuery("update employee set rank_id = '"+new_rank+"' where emp_id = "+this.emp_id);
+                    result.next();
+                    //Main.conn.commit();
+                    inputcheck = true;
+                    break;
+                default:
+                    System.out.println("Wrong input, try again.");
+
+            }
+        }
+
+
+        }catch(SQLException e){
+            System.out.println("SQL Exception: " + e.getMessage());
+            System.out.println("problem in updateUser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -169,5 +241,6 @@ public class User {
                 ", rankString='" + rankString + '\'' +
                 '}';
     }
+
 
 }

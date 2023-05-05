@@ -229,7 +229,7 @@ public class Program {
         Boolean check_view_done2 = false;
         while(check_view_done == false) {
             System.out.println("would you like to manage: ");
-            System.out.println(" [user] | [go back]");
+            System.out.println("[user] | [go back]");
             switch (keyboard.readLine()) {
 
                 case("user"):
@@ -237,7 +237,7 @@ public class Program {
                     System.out.println(getEmployeeList().toString());
                     while(check_view_done2 == false){
                         System.out.println("What would you like to do to users?");
-                        System.out.println("[add user] [remove user] [edit user] | [go back]");
+                        System.out.println("[add user] [remove user] [edit user] [view] | [go back]");
                         switch(keyboard.readLine()){
                             case("add user"):
                                 User new_user = ((User) addObject("User", keyboard));
@@ -245,7 +245,7 @@ public class Program {
                                 this.getEmployeeList().add(new_user);
                                 break;
                             case("remove user"):
-                                User user_to_delete = ((User) this.removeObject("User", keyboard));
+                                User user_to_delete = ((User) this.selectObject("User", keyboard));
                                 user_to_delete.deleteUser(stmt);
                                 for(int i = 0; i< getEmployeeList().size(); i++){
                                     if(user_to_delete.getEmp_id() == getEmployeeList().get(i).getEmp_id()){
@@ -254,6 +254,11 @@ public class Program {
                                 }
                                 break;
                             case("edit user"):
+                                User user_to_update = ((User) this.selectObject("User", keyboard));
+                                user_to_update.updateUser(stmt, keyboard);
+                                break;
+                            case("view"):
+                                System.out.println(this.getEmployeeList().toString());
                                 break;
                             case("go back"):
                                 check_view_done2 = true;
@@ -311,13 +316,13 @@ public class Program {
                 return null;
         }
     }
-    public Object removeObject(String input,BufferedReader keyboard) throws IOException {
+    public Object selectObject(String input, BufferedReader keyboard) throws IOException {
         boolean does_it_exist = false;
         switch(input) {
             case ("User"):
-                User object_to_delete = null;
+                User object_to_find = null;
                 int emp_id = -1;
-                System.out.println("ID of user to delete:");
+                System.out.println("ID of user to select:");
                 while(does_it_exist == false) {
                     while (emp_id == -1) {
                         try {
@@ -329,17 +334,20 @@ public class Program {
                             for (int i = 0; i < this.getEmployeeList().size(); i++) {
                                 if (this.getEmployeeList().get(i).getEmp_id() == emp_id) {
                                     does_it_exist = true;
-                                    object_to_delete = this.getEmployeeList().get(i);
+                                    object_to_find = this.getEmployeeList().get(i);
                                     break;
-                                } else {
-                                    System.out.println("not an existing employee, please try again.");
-                                    emp_id = -1;
                                 }
+
                             }
+
+                        }
+                        if(does_it_exist == false){
+                            System.out.println("not an existing employee, please try again.");
+                            emp_id = -1;
                         }
                     }
                 }
-            return object_to_delete;
+            return object_to_find;
 
 
 
