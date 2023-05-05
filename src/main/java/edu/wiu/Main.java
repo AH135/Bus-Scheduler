@@ -13,7 +13,6 @@ public class Main {
 
     public static void main(String Args[]) throws IOException{
         keyboard = new BufferedReader(new InputStreamReader(System.in));
-        String input_username;
 
         //System.out.println("this is the for the class CS 470");
         //System.out.println("please login to your employee account:");
@@ -24,7 +23,69 @@ public class Main {
         stmt = createStatement(conn);
 
         //program object houses functions that bring the rest of the objects together
+        System.out.println("Loading, please wait.");
         Program main_program = new Program(conn, stmt, keyboard);
+
+        //loops through the welcome screen until a user is found
+        main_program.setCurrent_User(main_program.user_login(main_program.getEmployeeList(), keyboard));
+        System.out.println("Welcome "+main_program.getCurrent_User().getUsername()+ ".");
+        System.out.println("Logged in as"+ main_program.getCurrent_User().getRankString());
+
+        while(true) {
+
+            switch (main_program.getCurrent_User().getRankString()) {
+                case ("Employee"):
+                    boolean check_e1 = false;
+                    while(check_e1 == false) {
+                        System.out.println("Would you like to [view] or [exit]");
+                        switch (keyboard.readLine()) {
+                            case ("view"):
+                                main_program.viewMenu(keyboard);
+                                break;
+                            case ("exit"):
+                                check_e1 = true;
+                                break;
+                            default:
+                                System.out.println("Invalid input, try again.");
+
+                        }
+                    }
+
+
+                    break;
+
+                case ("Manager"):
+                    boolean check_m1 = false;
+                    while (check_m1 == false) {
+                        System.out.println("Would you like to [view], [manage],  or [exit]");
+                        switch(keyboard.readLine()){
+                            case("view"):
+                                main_program.viewMenu(keyboard);
+                                break;
+                            case("manage"):
+                                
+                                break;
+                            case("exit"):
+                                check_m1 = true;
+                                break;
+                            default:
+                                System.out.println("invalid input, try again.");
+                        }
+
+                    }
+
+                case ("Admin"):
+                    System.out.println("not implemented");
+                    break;
+
+
+            }
+            break;
+        }
+
+
+
+        /* test  zone
         User test2 = new User (4, stmt);
         System.out.println(test2.toString());
 
@@ -39,6 +100,7 @@ public class Main {
         System.out.println(route_test.toString());
 
         System.out.println(main_program.toString());
+        */
 
 
 

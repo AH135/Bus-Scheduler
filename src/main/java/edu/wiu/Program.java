@@ -10,6 +10,8 @@ public class Program {
     private Statement stmt;
     private BufferedReader keyboard;
 
+    private User current_User;
+
     //these arraylists should list ALL the entries in the db
     ArrayList<User> employeeList = new ArrayList<>();
     ArrayList<Route> routeList = new ArrayList<>();
@@ -26,6 +28,8 @@ public class Program {
         routeList = fetch_routelist(getStmt());
         busList = fetch_buslist(getStmt());
         runList = fetch_runlist(stmt, routeList, employeeList, busList);
+
+
 
 
     }
@@ -54,6 +58,14 @@ public class Program {
 
     public ArrayList<Run> getRunList() {
         return runList;
+    }
+
+    public User getCurrent_User() {
+        return current_User;
+    }
+
+    public void setCurrent_User(User current_User) {
+        this.current_User = current_User;
     }
 
     //fetch for each list
@@ -147,6 +159,64 @@ public class Program {
         }
         return output;
 
+    }
+
+    //methods for user Interaction
+
+    //checks for a valid user in the userlist. should function recursively if input is not a match
+    public User user_login(ArrayList<User> input_list, BufferedReader keyboard) throws IOException {
+        System.out.println("Welcome! please login with a username:");
+        String input = keyboard.readLine();
+        String find_user = null;
+        User output = new User();
+
+        while(find_user == null) {
+            for (int i = 0; i < input_list.size(); i++) {
+                if (input.equals(input_list.get(i).getUsername())) {
+                    find_user = input_list.get(i).getRankString();
+                    output = input_list.get(i);
+                    break;
+                }
+            }
+            if (find_user != null){
+                break;
+            }else{
+                System.out.println("no known user, try again.");
+                input = keyboard.readLine();
+
+            }
+
+        }
+
+        return output;
+    }
+    //can add a list of stops if we want, would take a while, would need a arraylist of just the stops in program.
+    public void viewMenu(BufferedReader keyboard) throws IOException {
+        Boolean check_view_done = false;
+        while(check_view_done == false) {
+            System.out.println("would you like to view: ");
+            System.out.println("[run] [bus] [route] [user] | [go back]");
+            switch (keyboard.readLine()) {
+                case ("run"):
+                    System.out.println(getRunList().toString());
+                    break;
+                case("bus"):
+                    System.out.println(getBusList().toString());
+                    break;
+                case("route"):
+                    System.out.println(getRouteList().toString());
+                    break;
+                case("user"):
+                    System.out.println(getEmployeeList().toString());
+                    break;
+                case("go back"):
+                    check_view_done = true;
+                    break;
+                default:
+                    System.out.println("Invalid input, try again.");
+
+            }
+        }
     }
 
     @Override
